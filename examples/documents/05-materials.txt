@@ -1,0 +1,5 @@
+Materials and Garment Structure
+
+A garment combines material, silhouette, and construction. A structured woven fabric can hold a sharp shape, while a soft knit can follow the body. A prototype should test movement, seam placement, durability, and comfort together.
+
+Material choices become useful design decisions when their effects can be measured. A striking silhouette still needs a workable pattern and a repeatable manufacturing process.

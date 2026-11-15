@@ -1,0 +1,5 @@
+Inside an Inverted Index
+
+An inverted index maps each term to the documents that contain it. A posting records a document identifier and the term frequency in that document. Search reads the postings for query terms instead of scanning every document again.
+
+An index must use the same tokenization rules for documents and queries. Sorting document paths before indexing makes identifiers repeatable for an unchanged corpus.

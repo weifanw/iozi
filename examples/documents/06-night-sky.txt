@@ -1,0 +1,5 @@
+Observing the Night Sky
+
+A telescope collects light from distant objects. A larger aperture can collect more light, while atmospheric conditions also affect the detail visible to an observer. Careful observation records the equipment, location, and conditions.
+
+Comparing observations requires attention to uncertainty. A clear image and a reliable measurement are related goals, but they are not the same claim.

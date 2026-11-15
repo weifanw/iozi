@@ -1,0 +1,5 @@
+Ranking Search Results
+
+BM25 ranks a document using term rarity, term frequency, and document length. A rare matching keyword can contribute more than a common keyword. Repeating a term increases its contribution with diminishing returns.
+
+Ranking is a model of relevance. A high score is not a probability that a document answers the reader's question. Search quality should be evaluated using representative queries and judged results.

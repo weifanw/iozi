@@ -1,0 +1,5 @@
+Mini Search Engine
+
+A search engine helps a reader find documents by keyword. This mini search engine loads local text files, builds an index, and ranks matching documents. A query such as search engine can match both words or either word, depending on the selected mode.
+
+The search engine reports document paths and short text snippets. It keeps the index in memory while an interactive session is open.
