@@ -38,3 +38,24 @@ The GitHub Actions workflow defines GCC and Clang checks on Ubuntu. Its actual
 run status must be read from [GitHub Actions](https://github.com/weifanw/minse/actions).
 This pre-publication record does not claim a remote workflow passed. Windows,
 macOS and multilingual retrieval were not validated locally.
+
+## Browser extension validation
+
+The browser extension was built with Emscripten 7.0.0. Eight Wasm test groups
+and a worker suite pass against the actual compiled C++ module. Tests cover
+independent BM25 values, match modes, limits, invalid data, rollback, ordered
+requests and hundreds of rejected large arguments followed by successful use.
+
+An initial bridge leaked converted strings when throwing JavaScript exceptions
+from C++. It now returns an error envelope normally, and a JavaScript adapter
+throws after cleanup. Review also fixed collection-loading races, import-error
+recovery and a Unicode/ASCII normalization mismatch in the UI.
+
+Chromium browser checks verified the default sample search, all-keyword mode,
+local file import, document viewing with literal HTML and Chinese text, rejected
+binary input preserving the existing collection, removal and reload clearing
+user files. A 390-pixel iframe viewport verified the responsive layout without
+horizontal overflow, search shortcuts and access to the collapsed collection.
+This is not a claim of testing a physical mobile device or every browser.
+
+The native C++ engine was not modified for this extension.

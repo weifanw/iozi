@@ -56,3 +56,12 @@ These are implementation choices made for the current version, not requirements 
 | Clear operation and limitations | `README.md`, `docs/DESIGN.md`. |
 
 Validation results must come from the actual build and test run for the delivered commit. A source file, build target or workflow definition alone is not evidence that a test passed.
+
+## Browser experience extension
+
+The user subsequently requested the complete experience directly at `minse.io`,
+which they own through Cloudflare. This adds a public browser interface to the
+existing C++ project. Using WebAssembly, a Web Worker, a local file picker,
+session-only document state and the browser-specific input limits are new
+implementation decisions. The native engine, ranking and ASCII scope are
+retained. The website does not crawl or search the public web.

@@ -27,3 +27,20 @@ jobs:
         run: ctest --test-dir build --output-on-failure
       - name: Demo
         run: ./build/minse --data examples/documents --query "search engine" --top 3
+
+  browser-engine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Install pinned Emscripten toolchain
+        run: |
+          git clone https://github.com/emscripten-core/emsdk.git "$RUNNER_TEMP/emsdk"
+          git -C "$RUNNER_TEMP/emsdk" checkout 6afbd83493d647051772d491124187d4e9a0cda9
+          "$RUNNER_TEMP/emsdk/emsdk" install 7.0.0
+          "$RUNNER_TEMP/emsdk/emsdk" activate 7.0.0
+      - name: Build real C++ WebAssembly module
+        run: |
+          source "$RUNNER_TEMP/emsdk/emsdk_env.sh"
+          bash scripts/build-web.sh
+      - name: Test WebAssembly and browser worker
+        run: npm run test:web

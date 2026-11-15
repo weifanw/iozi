@@ -4,7 +4,18 @@ A small, runnable search engine for local text files, written in C++20 with the 
 
 **Scope:** ASCII keyword search over `.txt` and `.md` files. No external runtime libraries, web service or database. The index is rebuilt in memory on startup.
 
-## Run in a minute
+## Use in your browser
+
+[Open the browser app](https://minse.weifan-wei.chatgpt.site/).
+The homepage is the full search workspace: search the sample collection or
+import local `.txt` and `.md` files, inspect ranked results and read documents.
+Files and queries stay in the browser tab; reloading clears imported files.
+
+The browser runs the same C++ engine compiled to WebAssembly. It supports
+100 documents, 1 MiB per file and 10 MiB per collection. The ASCII keyword
+scope below applies to both interfaces. See [browser build and architecture](docs/WEB.md).
+
+## Run the command-line tool
 
 Requirements: a C++20 compiler and GNU Make. The test suite also uses Python 3's standard library; the engine itself does not use Python.
 

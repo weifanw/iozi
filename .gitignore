@@ -8,3 +8,7 @@
 *.gcov
 __pycache__/
 .DS_Store
+/dist/
+/node_modules/
+/.sites-runtime/
+/.sites-checkout/

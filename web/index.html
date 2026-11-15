@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f2">
+  <meta name="description" content="Search your text files with minse. A small, open-source search engine that runs on your device. Try the sample collection or bring your own documents.">
+  <meta property="og:title" content="minse — Search your documents">
+  <meta property="og:description" content="Your documents, a search box, and a little more clarity. Try minse in your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://minse.weifan-wei.chatgpt.site/">
+  <title>minse — Search your documents</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#query">Skip to search</a>
+  <header class="topbar">
+    <a class="wordmark" href="./" aria-label="minse home">minse<span aria-hidden="true">.</span></a>
+    <span class="header-note">A small search engine. A clear place to start.</span>
+    <nav class="header-actions" aria-label="Project">
+      <button class="text-button" type="button" id="help-button">How it works</button>
+      <a class="source-link" href="https://github.com/weifanw/minse" target="_blank" rel="noopener noreferrer">GitHub <span class="icon-arrow" aria-hidden="true"></span></a>
+    </nav>
+  </header>
+
+  <div class="workspace" id="workspace">
+    <aside class="sidebar" aria-label="Document collection">
+      <details class="collection-panel" id="collection-panel" open>
+        <summary><span class="eyebrow">Collection</span><span class="mobile-count" id="mobile-count">Loading…</span><span class="chevron" aria-hidden="true"></span></summary>
+        <div class="collection-content">
+          <div class="library-card">
+            <div class="library-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5h6l2 2h8v12H4z"/><path d="M4 7.5v-2"/></svg></div>
+            <div><strong id="collection-name">Sample library</strong><span id="collection-caption">Six small ideas to explore</span></div>
+            <span class="library-dot" aria-hidden="true"></span>
+          </div>
+          <div class="document-list-heading"><span>DOCUMENTS</span><span id="document-count">—</span></div>
+          <ul class="document-list" id="document-list" aria-label="Documents"></ul>
+          <button class="import-zone" id="import-button" type="button">
+            <span class="import-plus" aria-hidden="true">+</span>
+            <strong>Add your files</strong>
+            <span>Drop .txt or .md files here<br>or click to browse</span>
+          </button>
+          <input type="file" id="file-input" accept=".txt,.md,text/plain,text/markdown" multiple hidden>
+          <p class="file-limits">1 MiB per file · 10 MiB per collection</p>
+          <button class="text-button reset-button" type="button" id="reset-button" hidden>Restore sample library <span class="icon-reset" aria-hidden="true"></span></button>
+          <p class="collection-note" id="collection-note">Try a search below, or open a document to take a look.</p>
+        </div>
+      </details>
+      <div class="sidebar-bottom">
+        <span class="privacy-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="10" rx="2"/><path d="M8.5 10V7a3.5 3.5 0 0 1 7 0v3"/></svg></span>
+        <div><strong>Yours stays yours.</strong><p>Your file contents stay in this browser.<br>No account. No uploads.</p></div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <section class="search-section" aria-labelledby="search-title">
+        <div class="search-heading"><p class="eyebrow">Less looking. More finding.</p><span class="engine-state" id="engine-state"><span class="status-dot" aria-hidden="true"></span><span id="engine-label">Starting engine</span></span></div>
+        <h1 id="search-title">Search, <span>simply.</span></h1>
+        <p class="intro">Explore the collection or bring your own documents.</p>
+        <form class="search-form" id="search-form" role="search">
+          <label class="sr-only" for="query">Search keywords</label>
+          <svg class="search-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+          <input type="search" id="query" name="query" value="search engine" autocomplete="off" spellcheck="false" placeholder="What are you looking for?" aria-describedby="search-scope">
+          <button type="button" class="clear-query" id="clear-query" aria-label="Clear search">×</button>
+          <button type="submit" class="search-submit" id="search-submit">Search <span class="icon-arrow" aria-hidden="true"></span></button>
+        </form>
+        <div class="search-options">
+          <div class="mode-control" role="group" aria-label="Keyword matching">
+            <button type="button" data-mode="any" class="mode-button active" aria-pressed="true">Any word</button>
+            <button type="button" data-mode="all" class="mode-button" aria-pressed="false">All words</button>
+          </div>
+          <p id="search-scope">English letters &amp; numbers · Exact keywords</p>
+          <label class="limit-label">Show <select id="result-limit" aria-label="Maximum results"><option value="10">10</option><option value="25">25</option><option value="50">50</option></select></label>
+        </div>
+        <div class="suggestions" id="suggestions"><span>Try</span><button type="button" data-query="search engine">search engine <span class="icon-arrow" aria-hidden="true"></span></button><button type="button" data-query="template">template <span class="icon-arrow" aria-hidden="true"></span></button><button type="button" data-query="materials">materials <span class="icon-arrow" aria-hidden="true"></span></button></div>
+      </section>
+
+      <div class="notice" id="notice" role="alert" hidden><p id="notice-message"></p><button type="button" class="text-button" id="retry-button" hidden>Try again</button><button type="button" class="notice-dismiss" id="notice-dismiss" aria-label="Dismiss message">×</button></div>
+      <section class="results-section" aria-labelledby="results-heading" aria-busy="true" id="results-section">
+        <div class="results-toolbar"><h2 id="results-heading">Your results</h2><span class="results-summary" id="results-summary" role="status" aria-live="polite">Preparing your collection…</span></div>
+        <div class="results" id="results"><div class="empty-state"><div class="empty-symbol spinner" aria-hidden="true"></div><h3>A moment of preparation.</h3><p>Loading the search engine on your device.</p></div></div>
+      </section>
+      <footer class="workspace-footer"><span><span class="tiny-dot" aria-hidden="true"></span> Search runs on your device</span><span>Open source. Made with curiosity.</span></footer>
+    </main>
+  </div>
+  <div class="drop-overlay" id="drop-overlay" hidden><div><span aria-hidden="true">＋</span><strong>A new collection starts here.</strong><p>Drop your .txt and .md files to search them.</p></div></div>
+
+  <dialog class="document-dialog" id="document-dialog" aria-labelledby="document-title">
+    <div class="dialog-heading"><div><p class="eyebrow" id="document-label">Document</p><h2 id="document-title"></h2></div><button type="button" class="dialog-close" data-close="document-dialog" aria-label="Close document">×</button></div>
+    <p class="document-path" id="document-path"></p>
+    <pre class="document-text" id="document-text"></pre>
+  </dialog>
+  <dialog class="help-dialog" id="help-dialog" aria-labelledby="help-title">
+    <div class="dialog-heading"><div><p class="eyebrow">A quick introduction</p><h2 id="help-title">Small engine.<br>Thoughtful search.</h2></div><button type="button" class="dialog-close" data-close="help-dialog" aria-label="Close help">×</button></div>
+    <div class="help-content">
+      <p>minse finds keywords in a collection of text documents. Start with the sample library, or add your own <code>.txt</code> and <code>.md</code> files.</p>
+      <dl><dt>Any word / All words</dt><dd>Match at least one keyword, or require every keyword. Repeating a word does not give it extra weight.</dd><dt>Results, in a useful order</dt><dd>BM25 scores balance word rarity, repetition, and document length. A score is a ranking value, not a percentage or a probability.</dd><dt>A precise scope</dt><dd>Search recognizes English ASCII letters and numbers, ignores letter case, and splits punctuation. For example, “C++” becomes “c”. Chinese keywords, stemming, phrases, and semantic search are not supported in this version.</dd><dt>Private by design</dt><dd>Your file contents are read and searched locally in this browser tab. They are not uploaded or saved. Reloading the page clears your imported collection. The site makes ordinary requests to load its own code and sample files.</dd><dt>Room for a small collection</dt><dd>Up to 100 documents, 1 MiB per file and 10 MiB in total. Queries can be up to 4,096 UTF-8 bytes. The first import replaces the sample library; further imports add to your files.</dd></dl>
+      <p class="help-engine">The same open-source C++20 engine powers the command-line tool and this browser experience through WebAssembly.</p>
+      <a class="source-link" href="https://github.com/weifanw/minse" target="_blank" rel="noopener noreferrer">Explore the code <span class="icon-arrow" aria-hidden="true"></span></a>
+    </div>
+  </dialog>
+  <div class="sr-only" id="announcer" role="status" aria-live="polite"></div>
+</body>
+</html>

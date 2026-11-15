@@ -1,0 +1,26 @@
+[
+  {
+    "key": "01-search-engine.txt",
+    "text": "Mini Search Engine\n\nA search engine helps a reader find documents by keyword. This mini search engine loads local text files, builds an index, and ranks matching documents. A query such as search engine can match both words or either word, depending on the selected mode.\n\nThe search engine reports document paths and short text snippets. It keeps the index in memory while an interactive session is open.\n"
+  },
+  {
+    "key": "02-inverted-index.txt",
+    "text": "Inside an Inverted Index\n\nAn inverted index maps each term to the documents that contain it. A posting records a document identifier and the term frequency in that document. Search reads the postings for query terms instead of scanning every document again.\n\nAn index must use the same tokenization rules for documents and queries. Sorting document paths before indexing makes identifiers repeatable for an unchanged corpus.\n"
+  },
+  {
+    "key": "03-cpp-templates.txt",
+    "text": "Templates in C++\n\nA template can describe a family of types or functions. This project uses a tokenizer policy and a ranking policy to configure its search engine at compile time. C++ concepts check whether a policy provides the required operations.\n\nAn index sequence helps generate a character lookup table at compile time. The template machinery serves a specific purpose: explicit token rules and configurable ranking without virtual dispatch.\n"
+  },
+  {
+    "key": "04-ranking.txt",
+    "text": "Ranking Search Results\n\nBM25 ranks a document using term rarity, term frequency, and document length. A rare matching keyword can contribute more than a common keyword. Repeating a term increases its contribution with diminishing returns.\n\nRanking is a model of relevance. A high score is not a probability that a document answers the reader's question. Search quality should be evaluated using representative queries and judged results.\n"
+  },
+  {
+    "key": "05-materials.txt",
+    "text": "Materials and Garment Structure\n\nA garment combines material, silhouette, and construction. A structured woven fabric can hold a sharp shape, while a soft knit can follow the body. A prototype should test movement, seam placement, durability, and comfort together.\n\nMaterial choices become useful design decisions when their effects can be measured. A striking silhouette still needs a workable pattern and a repeatable manufacturing process.\n"
+  },
+  {
+    "key": "06-night-sky.txt",
+    "text": "Observing the Night Sky\n\nA telescope collects light from distant objects. A larger aperture can collect more light, while atmospheric conditions also affect the detail visible to an observer. Careful observation records the equipment, location, and conditions.\n\nComparing observations requires attention to uncertainty. A clear image and a reliable measurement are related goals, but they are not the same claim.\n"
+  }
+]
