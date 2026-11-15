@@ -35,7 +35,7 @@ Review found and fixed three defects, with regression coverage:
    before it. These are indicative local measurements, not a portable benchmark.
 
 The GitHub Actions workflow defines GCC and Clang checks on Ubuntu. Its actual
-run status must be read from [GitHub Actions](https://github.com/weifanw/minse/actions).
+run status must be read from [GitHub Actions](https://github.com/weifanw/iozi/actions).
 This pre-publication record does not claim a remote workflow passed. Windows,
 macOS and multilingual retrieval were not validated locally.
 

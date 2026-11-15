@@ -59,8 +59,8 @@ browser check in addition to these tests.
 
 ## Deployment
 
-The project is iozi. Source and build instructions currently remain at the public
-`weifanw/minse` repository URL until an administrator can rename it.
+The project is iozi. The existing `weifanw/minse` GitHub repository was renamed
+to [`weifanw/iozi`](https://github.com/weifanw/iozi), preserving its commit history.
 The deployed Site has a separate source remote and a tracked hosting manifest.
 Custom-domain DNS targets and ownership-validation records must be obtained from
 the host for the particular Site; do not guess an IP address or CNAME target.

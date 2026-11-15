@@ -18,15 +18,16 @@ The browser runs the same C++ engine compiled to WebAssembly. It supports
 100 documents, 1 MiB per file and 10 MiB per collection. The ASCII keyword
 scope below applies to both interfaces. See [browser build and architecture](docs/WEB.md).
 
-The GitHub repository URL still uses its original name pending an administrator
-rename. The project, executable and C++ API are all named `iozi`.
+The existing GitHub repository was renamed from `weifanw/minse` to
+[`weifanw/iozi`](https://github.com/weifanw/iozi), preserving its commit history.
+The project, executable and C++ API are all named `iozi`.
 
 ## Run the command-line tool
 
 Requirements: a C++20 compiler and GNU Make. The test suite also uses Python 3's standard library; the engine itself does not use Python.
 
 ```sh
-git clone https://github.com/weifanw/minse.git iozi
+git clone https://github.com/weifanw/iozi.git
 cd iozi
 make
 ./build/iozi --data examples/documents --query "search engine" --top 3
@@ -110,7 +111,7 @@ The unit tests cover token normalization, ranking, match modes, deterministic or
 See the [validation record](docs/VALIDATION.md) for actual local results and the
 environment's LeakSanitizer limitation.
 
-The [GitHub Actions workflow](.github/workflows/ci.yml) is configured to build and test on Ubuntu with GCC and Clang, with AddressSanitizer and UndefinedBehaviorSanitizer enabled. Check the [Actions page](https://github.com/weifanw/minse/actions) for actual run results.
+The [GitHub Actions workflow](.github/workflows/ci.yml) is configured to build and test on Ubuntu with GCC and Clang, with AddressSanitizer and UndefinedBehaviorSanitizer enabled. Check the [Actions page](https://github.com/weifanw/iozi/actions) for actual run results.
 
 ## How it works
 
