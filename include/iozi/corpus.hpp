@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace minse {
+namespace iozi {
 
 struct LoaderLimits {
     std::size_t max_file_bytes = 1024 * 1024;
@@ -26,4 +26,4 @@ struct CorpusDocument {
 [[nodiscard]] std::vector<CorpusDocument> load_corpus(
     const std::filesystem::path& directory, LoaderLimits limits = {});
 
-} // namespace minse
+} // namespace iozi

@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f7f2">
-  <meta name="description" content="Search your text files with minse. A small, open-source search engine that runs on your device. Try the sample collection or bring your own documents.">
-  <meta property="og:title" content="minse — Search your documents">
-  <meta property="og:description" content="Your documents, a search box, and a little more clarity. Try minse in your browser.">
+  <meta name="description" content="Search your text files with iozi. A small, open-source search engine that runs on your device. Try the sample collection or bring your own documents.">
+  <meta property="og:title" content="iozi — Search your documents">
+  <meta property="og:description" content="Your documents, a search box, and a little more clarity. Try iozi in your browser.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://minse.weifan-wei.chatgpt.site/">
-  <title>minse — Search your documents</title>
+  <title>iozi — Search your documents</title>
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./style.css">
   <script type="module" src="./app.js"></script>
@@ -17,7 +17,7 @@
 <body>
   <a class="skip-link" href="#query">Skip to search</a>
   <header class="topbar">
-    <a class="wordmark" href="./" aria-label="minse home">minse<span aria-hidden="true">.</span></a>
+    <a class="wordmark" href="./" aria-label="iozi home">iozi<span aria-hidden="true">.</span></a>
     <span class="header-note">A small search engine. A clear place to start.</span>
     <nav class="header-actions" aria-label="Project">
       <button class="text-button" type="button" id="help-button">How it works</button>
@@ -95,7 +95,7 @@
   <dialog class="help-dialog" id="help-dialog" aria-labelledby="help-title">
     <div class="dialog-heading"><div><p class="eyebrow">A quick introduction</p><h2 id="help-title">Small engine.<br>Thoughtful search.</h2></div><button type="button" class="dialog-close" data-close="help-dialog" aria-label="Close help">×</button></div>
     <div class="help-content">
-      <p>minse finds keywords in a collection of text documents. Start with the sample library, or add your own <code>.txt</code> and <code>.md</code> files.</p>
+      <p>iozi finds keywords in a collection of text documents. Start with the sample library, or add your own <code>.txt</code> and <code>.md</code> files.</p>
       <dl><dt>Any word / All words</dt><dd>Match at least one keyword, or require every keyword. Repeating a word does not give it extra weight.</dd><dt>Results, in a useful order</dt><dd>BM25 scores balance word rarity, repetition, and document length. A score is a ranking value, not a percentage or a probability.</dd><dt>A precise scope</dt><dd>Search recognizes English ASCII letters and numbers, ignores letter case, and splits punctuation. For example, “C++” becomes “c”. Chinese keywords, stemming, phrases, and semantic search are not supported in this version.</dd><dt>Private by design</dt><dd>Your file contents are read and searched locally in this browser tab. They are not uploaded or saved. Reloading the page clears your imported collection. The site makes ordinary requests to load its own code and sample files.</dd><dt>Room for a small collection</dt><dd>Up to 100 documents, 1 MiB per file and 10 MiB in total. Queries can be up to 4,096 UTF-8 bytes. The first import replaces the sample library; further imports add to your files.</dd></dl>
       <p class="help-engine">The same open-source C++20 engine powers the command-line tool and this browser experience through WebAssembly.</p>
       <a class="source-link" href="https://github.com/weifanw/minse" target="_blank" rel="noopener noreferrer">Explore the code <span class="icon-arrow" aria-hidden="true"></span></a>

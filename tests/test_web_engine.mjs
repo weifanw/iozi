@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import createMinseEngine from '../dist/engine.mjs';
+import createIoziEngine from '../dist/engine.mjs';
 
 const wasmBinary = await readFile(new URL('../dist/engine.wasm', import.meta.url));
 assert.deepEqual([...wasmBinary.subarray(0, 4)], [0, 97, 115, 109], 'A real Wasm binary must back the module');
-const module = await createMinseEngine({ wasmBinary });
+const module = await createIoziEngine({ wasmBinary });
 const search = (engine, query, all = false, limit = 100) => JSON.parse(engine.searchJson(query, all, limit));
 const stats = engine => JSON.parse(engine.statsJson());
 const near = (actual, expected) => assert.ok(Math.abs(actual - expected) < 1e-12, `${actual} != ${expected}`);

@@ -1,4 +1,4 @@
-#include "minse/corpus.hpp"
+#include "iozi/corpus.hpp"
 
 #include <algorithm>
 #include <array>
@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <utility>
 
-namespace minse {
+namespace iozi {
 namespace {
 
 bool supported_extension(const std::filesystem::path& path) {
@@ -121,4 +121,4 @@ std::vector<CorpusDocument> load_corpus(const std::filesystem::path& directory,
     return documents;
 }
 
-} // namespace minse
+} // namespace iozi

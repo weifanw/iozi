@@ -11,7 +11,7 @@ fi
 mkdir -p dist
 "$compiler" web/bridge.cpp -Iinclude -std=c++20 -O3 -Wall -Wextra -Wpedantic \
     -lembind -fexceptions -sDISABLE_EXCEPTION_CATCHING=0 \
-    -sMODULARIZE=1 -sEXPORT_ES6=1 -sEXPORT_NAME=createMinseEngine \
+    -sMODULARIZE=1 -sEXPORT_ES6=1 -sEXPORT_NAME=createIoziEngine \
     -sENVIRONMENT=web,worker,node -sALLOW_MEMORY_GROWTH=1 \
     -sMAXIMUM_MEMORY=268435456 -sFILESYSTEM=0 -sDYNAMIC_EXECUTION=0 \
     -o dist/engine.mjs

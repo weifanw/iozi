@@ -46,7 +46,7 @@ These are implementation choices made for the current version, not requirements 
 
 | Requested outcome | Review or verification entry point |
 | --- | --- |
-| Text indexing and keyword retrieval | `include/minse/engine.hpp`, engine unit tests. |
+| Text indexing and keyword retrieval | `include/iozi/engine.hpp`, engine unit tests. |
 | Relevance ranking | BM25 implementation, numerical score checks and ordering tests. |
 | Command-line interaction | `src/main.cpp`, `--help`, one-shot queries, REPL integration tests. |
 | Text-file ingestion | `src/corpus.cpp`, corpus unit tests and loader error cases. |
@@ -59,9 +59,19 @@ Validation results must come from the actual build and test run for the delivere
 
 ## Browser experience extension
 
-The user subsequently requested the complete experience directly at `minse.io`,
-which they own through Cloudflare. This adds a public browser interface to the
-existing C++ project. Using WebAssembly, a Web Worker, a local file picker,
+The user subsequently requested the complete experience at a custom domain.
+This adds a public browser interface to the existing C++ project. Using WebAssembly, a Web Worker, a local file picker,
 session-only document state and the browser-specific input limits are new
 implementation decisions. The native engine, ranking and ASCII scope are
 retained. The website does not crawl or search the public web.
+
+## Current name and domain
+
+On 15 November 2026 the user corrected the earlier domain information: the
+original proposed domain had expired and was no longer available to them. They
+explicitly chose **iozi**, with `iozi.io` as the replacement domain, and requested
+the project be renamed throughout. The executable, C++ namespace and include
+paths, build targets, WebAssembly factory, website branding and operating
+instructions now use iozi. The initial README quotation above remains verbatim
+as historical evidence. Existing Git history and the original license are
+preserved. Custom-domain readiness requires separate DNS and HTTPS verification.

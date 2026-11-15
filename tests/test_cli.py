@@ -14,7 +14,7 @@ BINARY = Path(sys.argv.pop(1)).resolve()
 
 class CliTests(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix="minse-cli-")
+        self.temp = tempfile.TemporaryDirectory(prefix="iozi-cli-")
         self.addCleanup(self.temp.cleanup)
         self.data = Path(self.temp.name)
         (self.data / "a.txt").write_text("Search engine engine. Fast search.", encoding="utf-8")

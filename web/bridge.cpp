@@ -1,4 +1,4 @@
-#include "minse/engine.hpp"
+#include "iozi/engine.hpp"
 
 #include <emscripten/bind.h>
 
@@ -87,7 +87,7 @@ public:
             }
             const auto limit = static_cast<std::size_t>(requested_limit);
             const auto matches = engine_.search(query, {
-                all ? minse::MatchMode::all : minse::MatchMode::any,
+                all ? iozi::MatchMode::all : iozi::MatchMode::any,
                 engine_.document_count()});
             std::ostringstream output;
             output.imbue(std::locale::classic());
@@ -117,13 +117,13 @@ public:
     }
 
 private:
-    minse::SearchEngine engine_;
+    iozi::SearchEngine engine_;
     std::size_t total_bytes_ = 0;
 };
 
 } // namespace
 
-EMSCRIPTEN_BINDINGS(minse_web) {
+EMSCRIPTEN_BINDINGS(iozi_web) {
     emscripten::class_<WebEngine>("NativeEngine")
         .constructor<>()
         .function("addDocumentResult", &WebEngine::add_document_result)

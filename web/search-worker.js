@@ -10,7 +10,7 @@ let modulePromise;
 function getModule() {
   if (!modulePromise) {
     modulePromise = import('./engine.mjs')
-      .then(({ default: createMinseEngine }) => createMinseEngine())
+      .then(({ default: createIoziEngine }) => createIoziEngine())
       .catch((error) => { modulePromise = null; throw error; });
   }
   return modulePromise;

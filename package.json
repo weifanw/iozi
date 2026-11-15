@@ -1,9 +1,9 @@
 {
-  "name": "minse-web",
+  "name": "iozi-web",
   "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "Browser interface for the minse C++ search engine",
+  "description": "Browser interface for the iozi C++ search engine",
   "scripts": {
     "build": "bash scripts/build-web.sh",
     "test:web": "node tests/test_web_engine.mjs && node tests/test_web_worker.mjs"

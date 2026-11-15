@@ -20,13 +20,13 @@ jobs:
       - name: Configure
         env:
           CXX: ${{ matrix.compiler }}
-        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DMINSE_SANITIZE=ON
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DIOZI_SANITIZE=ON
       - name: Build
         run: cmake --build build --parallel 2
       - name: Test
         run: ctest --test-dir build --output-on-failure
       - name: Demo
-        run: ./build/minse --data examples/documents --query "search engine" --top 3
+        run: ./build/iozi --data examples/documents --query "search engine" --top 3
 
   browser-engine:
     runs-on: ubuntu-latest

@@ -1,6 +1,6 @@
 /build*/
-/minse
-/minse.exe
+/iozi
+/iozi.exe
 *.o
 *.obj
 *.gcda

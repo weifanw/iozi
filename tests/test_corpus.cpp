@@ -1,4 +1,4 @@
-#include "minse/corpus.hpp"
+#include "iozi/corpus.hpp"
 
 #include <chrono>
 #include <filesystem>
@@ -40,7 +40,7 @@ struct TemporaryDirectory {
         const auto stamp = std::chrono::steady_clock::now().time_since_epoch().count();
         for (unsigned attempt = 0; attempt < 1000; ++attempt) {
             const auto candidate = fs::temp_directory_path()
-                / ("minse-corpus-test-" + std::to_string(stamp) + "-" + std::to_string(attempt));
+                / ("iozi-corpus-test-" + std::to_string(stamp) + "-" + std::to_string(attempt));
             if (fs::create_directory(candidate)) {
                 path = candidate;
                 return;
@@ -73,7 +73,7 @@ void recursive_order_and_filters() {
     directory.write(".hidden.txt", "hidden");
     directory.write(".private/nested.txt", "hidden tree");
     directory.write("notes/.hidden.md", "hidden nested file");
-    const auto documents = minse::load_corpus(directory.path);
+    const auto documents = iozi::load_corpus(directory.path);
     require(documents.size() == 3, "Expected only eligible visible files");
     require(documents[0].key == "a.txt" && documents[0].text == "first", "First sorted document");
     require(documents[1].key == "notes/A.Md" && documents[1].text == "middle\r\n", "Nested raw text");
@@ -84,7 +84,7 @@ void empty_documents_are_valid() {
     TemporaryDirectory directory;
     directory.write("empty.txt", "");
     directory.write("whitespace.md", " \t\n");
-    const auto documents = minse::load_corpus(directory.path);
+    const auto documents = iozi::load_corpus(directory.path);
     require(documents.size() == 2, "Empty text is a document");
     require(documents[0].text.empty(), "Empty document preserved");
 }
@@ -94,21 +94,21 @@ void exact_byte_limits() {
     directory.write("a.txt", "1234");
     directory.write("b.txt", "5678");
     directory.write("c.txt", "");
-    const auto documents = minse::load_corpus(directory.path, {4, 8, 3});
+    const auto documents = iozi::load_corpus(directory.path, {4, 8, 3});
     require(documents.size() == 3, "Exact limits and empty final document accepted");
-    expect_error([&] { (void)minse::load_corpus(directory.path, {3, 8, 3}); }, "File byte limit");
-    expect_error([&] { (void)minse::load_corpus(directory.path, {4, 7, 3}); }, "Total corpus byte limit");
-    expect_error([&] { (void)minse::load_corpus(directory.path, {4, 8, 2}); }, "document limit");
+    expect_error([&] { (void)iozi::load_corpus(directory.path, {3, 8, 3}); }, "File byte limit");
+    expect_error([&] { (void)iozi::load_corpus(directory.path, {4, 7, 3}); }, "Total corpus byte limit");
+    expect_error([&] { (void)iozi::load_corpus(directory.path, {4, 8, 2}); }, "document limit");
 }
 
 void chunked_reads() {
     TemporaryDirectory directory;
     const std::string text(16384, 'a');
     directory.write("large.md", text);
-    const auto documents = minse::load_corpus(directory.path, {16384, 16384, 1});
+    const auto documents = iozi::load_corpus(directory.path, {16384, 16384, 1});
     require(documents[0].text == text, "Exact multi-chunk text must be complete");
-    expect_error([&] { (void)minse::load_corpus(directory.path, {16383, 16384, 1}); }, "File byte limit");
-    expect_error([&] { (void)minse::load_corpus(directory.path, {16384, 16383, 1}); }, "Total corpus byte limit");
+    expect_error([&] { (void)iozi::load_corpus(directory.path, {16383, 16384, 1}); }, "File byte limit");
+    expect_error([&] { (void)iozi::load_corpus(directory.path, {16384, 16383, 1}); }, "Total corpus byte limit");
 }
 
 void nul_rejected_in_any_chunk() {
@@ -117,23 +117,23 @@ void nul_rejected_in_any_chunk() {
     std::string text(9000, 'a');
     text[8500] = '\0';
     directory.write("b.txt", text);
-    expect_error([&] { (void)minse::load_corpus(directory.path); }, "NUL byte");
+    expect_error([&] { (void)iozi::load_corpus(directory.path); }, "NUL byte");
 }
 
 void missing_wrong_and_empty_directories() {
     TemporaryDirectory directory;
-    expect_error([&] { (void)minse::load_corpus(directory.path / "missing"); });
-    expect_error([&] { (void)minse::load_corpus(directory.path); }, "No eligible");
+    expect_error([&] { (void)iozi::load_corpus(directory.path / "missing"); });
+    expect_error([&] { (void)iozi::load_corpus(directory.path); }, "No eligible");
     directory.write("file.txt", "content");
-    expect_error([&] { (void)minse::load_corpus(directory.path / "file.txt"); }, "directory");
+    expect_error([&] { (void)iozi::load_corpus(directory.path / "file.txt"); }, "directory");
 }
 
 void positive_limits_required() {
     TemporaryDirectory directory;
     directory.write("a.txt", "a");
-    expect_error([&] { (void)minse::load_corpus(directory.path, {0, 1, 1}); }, "positive");
-    expect_error([&] { (void)minse::load_corpus(directory.path, {1, 0, 1}); }, "positive");
-    expect_error([&] { (void)minse::load_corpus(directory.path, {1, 1, 0}); }, "positive");
+    expect_error([&] { (void)iozi::load_corpus(directory.path, {0, 1, 1}); }, "positive");
+    expect_error([&] { (void)iozi::load_corpus(directory.path, {1, 0, 1}); }, "positive");
+    expect_error([&] { (void)iozi::load_corpus(directory.path, {1, 1, 0}); }, "positive");
 }
 
 void symlinks_are_excluded() {
@@ -150,13 +150,13 @@ void symlinks_are_excluded() {
     fs::create_directory_symlink(outside.path, directory.path / "linked-dir");
     fs::create_directory_symlink(directory.path, directory.path / "loop");
     fs::create_symlink(directory.path / "absent", directory.path / "broken.txt");
-    const auto documents = minse::load_corpus(directory.path);
+    const auto documents = iozi::load_corpus(directory.path);
     require(documents.size() == 1 && documents[0].key == "real.txt", "All symlinks skipped");
-    expect_error([&] { (void)minse::load_corpus(directory.path / "linked-dir"); }, "non-symlink");
-    expect_error([&] { (void)minse::load_corpus(directory.path / "linked-dir" / ""); }, "non-symlink");
-    expect_error([&] { (void)minse::load_corpus(directory.path / "linked-dir" / "."); }, "non-symlink");
-    require(minse::load_corpus(directory.path / "").size() == 1, "Ordinary trailing slash accepted");
-    require(minse::load_corpus(directory.path / ".").size() == 1, "Ordinary trailing dot accepted");
+    expect_error([&] { (void)iozi::load_corpus(directory.path / "linked-dir"); }, "non-symlink");
+    expect_error([&] { (void)iozi::load_corpus(directory.path / "linked-dir" / ""); }, "non-symlink");
+    expect_error([&] { (void)iozi::load_corpus(directory.path / "linked-dir" / "."); }, "non-symlink");
+    require(iozi::load_corpus(directory.path / "").size() == 1, "Ordinary trailing slash accepted");
+    require(iozi::load_corpus(directory.path / ".").size() == 1, "Ordinary trailing dot accepted");
 }
 
 } // namespace

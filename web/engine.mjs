@@ -1,7 +1,7 @@
 // Thin lifetime/error adapter. Ranking and indexing run in the C++ Wasm core.
 import createNativeEngine from './engine-core.mjs';
 
-export default async function createMinseEngine(options = {}) {
+export default async function createIoziEngine(options = {}) {
   const module = await createNativeEngine(options);
   function decoded(result) {
     const value = JSON.parse(result);

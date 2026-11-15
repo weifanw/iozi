@@ -14,7 +14,7 @@
 #include <utility>
 #include <vector>
 
-namespace minse {
+namespace iozi {
 
 namespace detail {
 constexpr unsigned char normalized_ascii(std::size_t byte) noexcept {
@@ -262,4 +262,4 @@ private:
 
 using SearchEngine = BasicSearchEngine<>;
 
-} // namespace minse
+} // namespace iozi

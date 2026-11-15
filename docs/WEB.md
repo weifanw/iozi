@@ -5,7 +5,7 @@ ranked results and document reader. No account or application backend is needed.
 
 ## Architecture
 
-The application uses the same `include/minse/engine.hpp` as the native CLI.
+The application uses the same `include/iozi/engine.hpp` as the native CLI.
 `web/bridge.cpp` exposes it through Emscripten/Embind. The browser loads
 `engine.mjs` and `engine.wasm`; `web/search-worker.js` indexes and searches in a
 Web Worker so that the interface remains responsive.
@@ -59,8 +59,11 @@ browser check in addition to these tests.
 
 ## Deployment
 
-Source and build instructions remain in the public `weifanw/minse` repository.
+The project is iozi. Source and build instructions currently remain at the public
+`weifanw/minse` repository URL until an administrator can rename it.
 The deployed Site has a separate source remote and a tracked hosting manifest.
 Custom-domain DNS targets and ownership-validation records must be obtained from
 the host for the particular Site; do not guess an IP address or CNAME target.
 The domain is not ready until host validation, DNS resolution and HTTPS all pass.
+
+The current custom-domain target is `iozi.io`. See [domain setup](DOMAIN.md).

@@ -1,5 +1,5 @@
-#include "minse/corpus.hpp"
-#include "minse/engine.hpp"
+#include "iozi/corpus.hpp"
+#include "iozi/engine.hpp"
 
 #include <algorithm>
 #include <charconv>
@@ -25,7 +25,7 @@ public:
 struct Options {
     std::string directory;
     std::optional<std::string> query;
-    minse::SearchOptions search;
+    iozi::SearchOptions search;
     bool help = false;
 };
 
@@ -48,9 +48,9 @@ std::string printable(std::string_view input) {
 
 void print_help() {
     std::cout
-        << "minse - Mini Search Engine\n\n"
-        << "Usage: minse --data DIRECTORY [--query TEXT] [--mode any|all] [--top N]\n"
-        << "       minse --help\n\n"
+        << "iozi - Mini Search Engine\n\n"
+        << "Usage: iozi --data DIRECTORY [--query TEXT] [--mode any|all] [--top N]\n"
+        << "       iozi --help\n\n"
         << "  --data DIRECTORY  Recursively index .txt and .md files.\n"
         << "  --query TEXT      Search once; omit to enter the interactive prompt.\n"
         << "  --mode any|all    Match any keyword (default) or every keyword.\n"
@@ -94,9 +94,9 @@ Options parse_options(int argc, char* argv[]) {
             options.query = value;
         } else if (argument == "--mode") {
             if (value == "any") {
-                options.search.mode = minse::MatchMode::any;
+                options.search.mode = iozi::MatchMode::any;
             } else if (value == "all") {
-                options.search.mode = minse::MatchMode::all;
+                options.search.mode = iozi::MatchMode::all;
             } else {
                 throw UsageError("--mode must be any or all");
             }
@@ -120,7 +120,7 @@ Options parse_options(int argc, char* argv[]) {
     return options;
 }
 
-void print_stats(const minse::SearchEngine& engine) {
+void print_stats(const iozi::SearchEngine& engine) {
     std::cout << "Indexed " << engine.document_count() << " documents ("
               << engine.vocabulary_size() << " terms, " << engine.total_tokens()
               << " tokens).\n";
@@ -167,14 +167,14 @@ std::string snippet(std::string_view text, const std::unordered_set<std::string>
     return (begin > 0 ? "..." : "") + printable(excerpt) + (end < text.size() ? "..." : "");
 }
 
-void print_search(const minse::SearchEngine& engine, std::string_view query,
-                  minse::SearchOptions options) {
+void print_search(const iozi::SearchEngine& engine, std::string_view query,
+                  iozi::SearchOptions options) {
     const auto results = engine.search(query, options);
     if (results.empty()) {
         std::cout << "No matches.\n";
         return;
     }
-    const auto tokens = minse::AsciiTokenizer<>{}(query);
+    const auto tokens = iozi::AsciiTokenizer<>{}(query);
     const std::unordered_set<std::string> terms(tokens.begin(), tokens.end());
     for (std::size_t i = 0; i < results.size(); ++i) {
         const auto& result = results[i];
@@ -222,8 +222,8 @@ int run(const Options& options) {
         print_help();
         return 0;
     }
-    minse::SearchEngine engine;
-    auto corpus = minse::load_corpus(options.directory);
+    iozi::SearchEngine engine;
+    auto corpus = iozi::load_corpus(options.directory);
     for (auto& document : corpus) {
         engine.add_document(std::move(document.key), std::move(document.text));
     }
@@ -234,7 +234,7 @@ int run(const Options& options) {
     }
     std::cout << "Enter keywords, or :help for commands.\n";
     for (;;) {
-        std::cout << "minse> " << std::flush;
+        std::cout << "iozi> " << std::flush;
         const auto query = read_query(std::cin);
         if (!query) {
             std::cout << '\n';
@@ -262,10 +262,10 @@ int main(int argc, char* argv[]) {
     try {
         return run(parse_options(argc, argv));
     } catch (const UsageError& error) {
-        std::cerr << "minse: " << printable(error.what()) << "\nUse --help for usage.\n";
+        std::cerr << "iozi: " << printable(error.what()) << "\nUse --help for usage.\n";
         return 2;
     } catch (const std::exception& error) {
-        std::cerr << "minse: " << printable(error.what()) << '\n';
+        std::cerr << "iozi: " << printable(error.what()) << '\n';
         return 1;
     }
 }

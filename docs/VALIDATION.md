@@ -59,3 +59,22 @@ horizontal overflow, search shortcuts and access to the collapsed collection.
 This is not a claim of testing a physical mobile device or every browser.
 
 The native C++ engine was not modified for this extension.
+
+## iozi rename validation
+
+On 15 November 2026, after renaming the executable, namespace, include directory,
+build targets and WebAssembly factory, the following checks were rerun:
+
+- `make BUILD_DIR=build-iozi test`: 9 engine groups, 8 corpus groups and 14 CLI
+  tests passed.
+- A fresh CMake Release build in `build-cmake-iozi`: all 3 CTest suites passed.
+- Emscripten 7.0.0 rebuilt the actual WebAssembly module; all 8 Wasm groups and
+  the worker suite passed.
+- The sample CLI query and the `iozi>` interactive prompt were verified.
+- Chromium rendered the iozi wordmark and title, returned the expected 4 sample
+  matches and 1 template match, and opened the full document reader.
+
+The rename does not change tokenization or ranking. Sanitizer results above
+belong to the earlier implementation validation; sanitizers were not rerun for
+this naming-only change. The earlier GitHub Actions jobs could not start because
+the account reported a billing lock; local results do not imply remote CI passed.

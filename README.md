@@ -1,4 +1,4 @@
-# minse
+# iozi
 
 A small, runnable search engine for local text files, written in C++20 with the standard library. It builds an inverted index, finds keyword matches and ranks them with BM25. Search once from the command line or keep the index open in an interactive session.
 
@@ -7,6 +7,9 @@ A small, runnable search engine for local text files, written in C++20 with the 
 ## Use in your browser
 
 [Open the browser app](https://minse.weifan-wei.chatgpt.site/).
+The product is now **iozi**. The selected custom domain is `iozi.io`; its DNS and
+HTTPS activation are pending. The working hosted URL above retains the original
+platform slug. See [domain setup](docs/DOMAIN.md) for the actual DNS records.
 The homepage is the full search workspace: search the sample collection or
 import local `.txt` and `.md` files, inspect ranked results and read documents.
 Files and queries stay in the browser tab; reloading clears imported files.
@@ -15,15 +18,18 @@ The browser runs the same C++ engine compiled to WebAssembly. It supports
 100 documents, 1 MiB per file and 10 MiB per collection. The ASCII keyword
 scope below applies to both interfaces. See [browser build and architecture](docs/WEB.md).
 
+The GitHub repository URL still uses its original name pending an administrator
+rename. The project, executable and C++ API are all named `iozi`.
+
 ## Run the command-line tool
 
 Requirements: a C++20 compiler and GNU Make. The test suite also uses Python 3's standard library; the engine itself does not use Python.
 
 ```sh
-git clone https://github.com/weifanw/minse.git
-cd minse
+git clone https://github.com/weifanw/minse.git iozi
+cd iozi
 make
-./build/minse --data examples/documents --query "search engine" --top 3
+./build/iozi --data examples/documents --query "search engine" --top 3
 ```
 
 The sample query ranks these documents first (snippets omitted here):
@@ -39,13 +45,13 @@ Try these queries against the six included documents:
 
 ```sh
 # Any keyword can match; results are ranked by relevance.
-./build/minse --data examples/documents --query "search index"
+./build/iozi --data examples/documents --query "search index"
 
 # Every distinct keyword must occur in a document.
-./build/minse --data examples/documents --query "search engine" --mode all
+./build/iozi --data examples/documents --query "search engine" --mode all
 
 # Keep the loaded index open for successive queries.
-./build/minse --data examples/documents
+./build/iozi --data examples/documents
 ```
 
 In interactive mode, enter keywords or use `:help`, `:stats` and `:quit`. End-of-file also exits. Results show a document path, a BM25 score and a text snippet. Output escapes control and non-ASCII bytes as `\xHH`; snippets collapse ordinary whitespace.
@@ -54,15 +60,15 @@ For a build without Make or CMake:
 
 ```sh
 g++ -std=c++20 -O2 -Wall -Wextra -Wpedantic -Iinclude \
-    src/main.cpp src/corpus.cpp -o minse
-./minse --data examples/documents --query "template"
+    src/main.cpp src/corpus.cpp -o iozi
+./iozi --data examples/documents --query "template"
 ```
 
 ## Command-line interface
 
 ```text
-minse --data DIRECTORY [--query TEXT] [--mode any|all] [--top N]
-minse --help
+iozi --data DIRECTORY [--query TEXT] [--mode any|all] [--top N]
+iozi --help
 ```
 
 | Option | Behaviour |
@@ -94,7 +100,7 @@ Sanitizer support depends on the compiler and platform. Alternatively, use CMake
 cmake -S . -B build-cmake
 cmake --build build-cmake
 ctest --test-dir build-cmake --output-on-failure
-./build-cmake/minse --data examples/documents --query "search engine"
+./build-cmake/iozi --data examples/documents --query "search engine"
 ```
 
 Set `-DBUILD_TESTING=OFF` when configuring CMake if only the executable is needed; that build does not require Python. Multi-configuration generators may place the executable in a configuration subdirectory such as `Debug/`.
@@ -118,11 +124,11 @@ The [GitHub Actions workflow](.github/workflows/ci.yml) is configured to build a
 The core is a header-only library and can also be used directly:
 
 ```cpp
-#include "minse/engine.hpp"
+#include "iozi/engine.hpp"
 
-minse::BasicSearchEngine<minse::AsciiTokenizer<2>, minse::BM25<150, 75>> engine;
+iozi::BasicSearchEngine<iozi::AsciiTokenizer<2>, iozi::BM25<150, 75>> engine;
 engine.add_document("notes.txt", "A small search engine with a local index.");
-auto hits = engine.search("search index", {minse::MatchMode::all, 5});
+auto hits = engine.search("search index", {iozi::MatchMode::all, 5});
 // hits contain document IDs and scores; engine.document(id) returns the document.
 ```
 
@@ -133,7 +139,7 @@ See [design and scoring](docs/DESIGN.md) for the formula, data structures and li
 这是一个可以本地运行的 C++20 最小搜索引擎，包含倒排索引、关键词检索、BM25 排序、命令行交互、示例数据和测试。运行 `make` 后，执行：
 
 ```sh
-./build/minse --data examples/documents --query "search engine"
+./build/iozi --data examples/documents --query "search engine"
 ```
 
 本版以英文 ASCII 关键词为范围，**不支持中文分词或 Unicode 大小写归一化**。可以读取含 UTF-8 内容的文件，但非 ASCII 字节只作为分隔符，不会被索引为中文关键词。索引不写入磁盘，每次启动重新构建。原仓库只有项目名称和简短说明；此处的技术架构是本次新增设计，并非原始需求中已有的实现。
